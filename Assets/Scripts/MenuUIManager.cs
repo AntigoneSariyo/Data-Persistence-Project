@@ -7,14 +7,21 @@ using System.IO;
 
 public class MenuUIManager : MonoBehaviour
 {
-    public InputField inputField;
+
     public void NameEntered(string name)
     {
         HighscoreManager.Instance.playerName = name;
     }
-    public void StartGame()
+    public void LoadScene(int scene)
     {
-        SceneManager.LoadScene(1);
-        Debug.Log("Name: " + HighscoreManager.Instance.playerName);
+        SceneManager.LoadScene(scene);
+    }
+    public void TestButton(int scene)
+    {
+        Debug.Log("Load scene #" + scene);
+    }
+    public void Difficulty(int dif)
+    {
+        HighscoreManager.Instance.Difficulty(dif);
     }
 }

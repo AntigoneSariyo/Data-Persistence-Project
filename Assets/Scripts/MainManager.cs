@@ -8,8 +8,9 @@ using System.IO;
 public class MainManager : MonoBehaviour
 {
     public Brick BrickPrefab;
-    public int LineCount = 6;
+    public int LineCount;
     public Rigidbody Ball;
+    public float ballSpeed;
 
     public Text ScoreText;
     public GameObject GameOverText;
@@ -17,7 +18,7 @@ public class MainManager : MonoBehaviour
 
     private bool m_Started = false;
     private int m_Points;
-    public string playerName = "ASS";
+    public string playerName;
 
     private string hs_Name;
     private int hs_Points;
@@ -28,7 +29,10 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerName = HighscoreManager.Instance.playerName;
         Load();
+        ballSpeed = HighscoreManager.Instance.ballSpeed;
+        LineCount = HighscoreManager.Instance.LineCount;
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
@@ -57,7 +61,7 @@ public class MainManager : MonoBehaviour
                 forceDir.Normalize();
 
                 Ball.transform.SetParent(null);
-                Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+                Ball.AddForce(forceDir * ballSpeed, ForceMode.VelocityChange);
             }
         }
         else if (m_GameOver)
@@ -66,6 +70,10 @@ public class MainManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 
